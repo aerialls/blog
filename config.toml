@@ -1,0 +1,54 @@
+baseurl = "https://www.aerials.io"
+title = "Julien Brochet"
+theme = "hugo-coder"
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+canonifyurls = true
+
+pygmentsstyle = "bw"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+disqusShortname = "aerialls"
+
+[params]
+    author = "Julien Brochet"
+    info = "Site Reliability Engineer between two reboots"
+    description = "Julien Brochet's personal website"
+    keywords = "blog,sre,sysadmin,personal"
+    avatarurl = "images/avatar.jpg"
+
+    favicon_32 = "/icons/favicon-32x32.png"
+    favicon_16 = "/icons/favicon-16x16.png"
+
+    hidecredits = false
+    hidecopyright = false
+
+    rtl = false
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[[params.social]]
+    name = "Github"
+    icon = "fab fa-github fa-2x"
+    weight = 1
+    url = "https://github.com/aerialls"
+[[params.social]]
+    name = "Twitter"
+    icon = "fab fa-twitter fa-2x"
+    weight = 3
+    url = "https://twitter.com/aerialls"
+[[params.social]]
+    name = "LinkedIn"
+    icon = "fab fa-linkedin fa-2x"
+    weight = 4
+    url = "https://www.linkedin.com/in/julienbrochet/"
+
+[[menu.main]]
+    name = "Blog"
+    weight = 1
+    url  = "/posts/"
