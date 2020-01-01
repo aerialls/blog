@@ -47,6 +47,11 @@ disqusShortname = "aerialls"
     icon = "fab fa-linkedin fa-2x"
     weight = 4
     url = "https://www.linkedin.com/in/julienbrochet/"
+[[params.social]]
+    name = "Flickr"
+    icon = "fab fa-flickr fa-2x"
+    weight = 5
+    url = "https://www.flickr.com/photos/aerialls/"
 
 [[menu.main]]
     name = "Blog"
