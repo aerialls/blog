@@ -2,7 +2,7 @@
 title = "Ubuntu 18.04 image with Packer and Ansible for Proxmox"
 slug = "ubuntu-image-with-packer-and-ansible-for-proxmox"
 date = "2019-12-15T19:15:00+01:00"
-lastmod = "2020-01-04T23:15:48+01:00"
+lastmod = "2020-01-04T16:01:00+01:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
 +++

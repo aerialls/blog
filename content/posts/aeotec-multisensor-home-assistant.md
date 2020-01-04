@@ -2,7 +2,7 @@
 title = "Aeotec MultiSensor 6 with Home-Assistant"
 slug = "aeotec-multisensor-home-assistant"
 date = "2019-01-03T23:33:00+01:00"
-lastmod = "2020-01-04T23:15:48+01:00"
+lastmod = "2020-01-04T16:01:00+01:00"
 categories = ["automation"]
 tags = ["home-assistant", "aetoec"]
 aliases = ["/2018/12/27/home-assistant-aeotec-multisensor-6.html"]
