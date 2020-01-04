@@ -7,6 +7,10 @@ categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
 +++
 
+{{< alert "info" >}}
+Even if the article focuses on Ubuntu 18.04,  it has been tested successfully for Ubuntu 19.04 and Ubuntu 19.10.
+{{< /alert >}}
+
 If you read my previous post, time has passed since then. I have ditched my Raspberry Pi 3B+ and Hassbian for a dedicated Intel NUC with Proxmox and Hass.io [^1]. But this is not the subject of this post.
 
 With my love to automate things, I was looking for a way to generate a base Ubuntu image for Proxmox to use it later on with Ansible for severals VMs (Home-Assistant is just one example).
