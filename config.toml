@@ -1,15 +1,15 @@
 baseurl = "https://www.aerialls.io"
 title = "Julien Brochet"
 theme = "hugo-coder"
-languagecode = "en"
-defaultcontentlanguage = "en"
+languageCode = "en"
+defaultContentLanguage = "en"
 
 paginate = 20
 canonifyurls = true
 
-pygmentsstyle = "bw"
-pygmentscodefences = true
-pygmentscodefencesguesssyntax = true
+pygmentsStyle = "vs"
+pygmentsCodeFences = true
+pygmentsCodeFencesGuessSyntax = true
 
 disqusShortname = "aerialls"
 
@@ -27,6 +27,8 @@ disqusShortname = "aerialls"
     hidecopyright = false
 
     rtl = false
+
+    custom_css = ["css/custom.css"]
 
 [taxonomies]
   category = "categories"
