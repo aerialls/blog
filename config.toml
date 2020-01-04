@@ -7,7 +7,7 @@ defaultContentLanguage = "en"
 paginate = 20
 canonifyurls = true
 
-pygmentsStyle = "vs"
+pygmentsStyle = "monokai"
 pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 

@@ -57,7 +57,47 @@ Download the latest Ubuntu Server 18.04 from the [official website](http://cdima
 
 Packer needs a JSON configuration file to work with two main sections: builders and provisioners. Builders will be responsible to start the VM and launch the preseed configuration and provisioners to execute additional tasks into our running VM at the end before generating the template.
 
-{{< gist aerialls 51808799cb2c6fe5fede9270066ffd98 >}}
+```json
+{
+    "builders": [
+        {
+            "type": "proxmox",
+            "proxmox_url": "https://proxmox.madalynn.xyz:8006/api2/json",
+            "username": "{{ user `username` }}",
+            "password": "{{ user `password` }}",
+            "node": "proxmox",
+            "network_adapters": [
+                {
+                    "bridge": "vmbr0"
+                }
+            ],
+            "disks": [
+                {
+                    "type": "scsi",
+                    "disk_size": "20G",
+                    "storage_pool": "local-lvm",
+                    "storage_pool_type": "lvm"
+                }
+            ],
+            "iso_file": "local:iso/ubuntu-18.04.3-server-amd64.iso",
+            "unmount_iso": true,
+            "template_name": "ubuntu-18.04",
+            "http_directory": "config",
+            "boot_command": [
+                "<esc><wait><esc><wait><enter><wait>",
+                "/install/vmlinuz ",
+                "initrd=/install/initrd.gz ",
+                "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+                "auto=true ",
+                "priority=critical ",
+                "-- <enter>"
+            ],
+            "ssh_username": "madalynn",
+            "ssh_password": "madalynn"
+        }
+    ]
+}
+```
 
 The username and password for the Proxmox connection will be store in another JSON file (that you can gitignore).
 
@@ -83,7 +123,51 @@ The `preseed.cfg` file needs to be locally inside the `config` directory (or you
 
 Here is an example of what the file looks like.
 
-{{< gist aerialls 9761d2935644d7da2b19ef761ef9d162 >}}
+```
+# LOCALE
+d-i debian-installer/locale string en_US
+
+# KEYBOARD
+d-i console-setup/ask_detect boolean false
+d-i keyboard-configuration/layoutcode string fr
+
+# USER
+d-i passwd/user-fullname string Madalynn
+d-i passwd/username string madalynn
+d-i passwd/user-password password madalynn
+d-i passwd/user-password-again password madalynn
+
+# APT
+d-i mirror/protocol string http
+d-i mirror/country string manual
+d-i mirror/http/hostname string fr.archive.ubuntu.com
+d-i mirror/http/directory string /ubuntu
+d-i mirror/http/proxy string
+
+# TIMEZONE
+d-i time/zone string Europe/Paris
+
+# LVM
+d-i partman-auto/method string lvm
+d-i partman-auto/disk string /dev/sda
+d-i partman-auto-lvm/guided_size string max
+d-i partman-auto/choose_recipe select atomic
+
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+
+# PACKAGES
+d-i pkgsel/include string openssh-server qemu-guest-agent
+d-i pkgsel/upgrade select full-upgrade
+
+# END
+d-i finish-install/reboot_in_progress note
+```
 
 If you wan to learn more about preseed files, Ubuntu has [a full documentation on this subject](https://help.ubuntu.com/lts/installation-guide/s390x/apb.html).
 
@@ -110,6 +194,7 @@ This is where Packer provisioners will help. Provisioners are a way to execute c
             "execute_command": "echo 'madalynn' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'",
             "script": "scripts/setup.sh"
         }
+    ]
 }
 ```
 
@@ -137,6 +222,7 @@ The second provisioner will launch an Ansible playbook to add the public key for
             "type": "ansible",
             "playbook_file": "./ansible/provisioning.yml"
         }
+    ]
 }
 ```
 
