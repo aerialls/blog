@@ -5,6 +5,7 @@ date = "2019-01-03T23:33:00+01:00"
 lastmod = "2019-12-31T15:56:00+01:00"
 categories = ["automation"]
 tags = ["home-assistant", "aetoec"]
+aliases = ["/2018/12/27/home-assistant-aeotec-multisensor-6.html"]
 +++
 
 After reading some blog posts, I decided to start my journey in home automation with something simple: monitor the temperature and humidity. As I didn't want a huge DIY-project to begin with, I chose the Aeotec MultiSensor 6 with Home-Assistant.
