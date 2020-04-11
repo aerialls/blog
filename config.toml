@@ -28,7 +28,7 @@ disqusShortname = "aerialls"
     hidecopyright = false
 
     rtl = false
-    commit = "https://github.com/aerialls/www.aerialls.io/commit/"
+    commit = "https://github.com/aerialls/www.aerialls.io/commit"
 
     custom_css = ["css/custom.css"]
 
