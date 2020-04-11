@@ -2,7 +2,7 @@
 title = "Ubuntu 18.04 image with Packer and Ansible for Proxmox"
 slug = "ubuntu-image-with-packer-and-ansible-for-proxmox"
 date = "2019-12-15T19:15:00+01:00"
-lastmod = "2020-01-04T16:01:00+01:00"
+lastmod = "2020-04-11T19:02:00+02:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
 +++
@@ -41,7 +41,7 @@ The first thing is to create a dedicated user for Packer in Proxmox. In the data
 
 ![Packer role in Proxmox](/images/proxmox/packer-role.png)
 
-After that, create a new Packer user. For me, I've created it inside the `Linux PAM standard authentication` realm so the username will be `packer@pve`.
+After that, create a new Packer user. For me, I've created it inside the `Proxmox VE authentication server` realm so the username will be `packer@pve`.
 
 ![Packer user in Proxmox](/images/proxmox/packer-user.png)
 
