@@ -18,7 +18,7 @@ disqusShortname = "aerialls"
     info = "Site Reliability Engineer between two reboots"
     description = "Julien Brochet's personal website"
     keywords = "blog,sre,sysadmin,personal"
-    avatarurl = "images/avatar.jpg"
+    avatarurl = "images/persona.png"
 
     favicon_32 = "/icons/favicon-32x32.png"
     favicon_16 = "/icons/favicon-16x16.png"
