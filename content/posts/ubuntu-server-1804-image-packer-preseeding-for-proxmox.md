@@ -2,14 +2,14 @@
 title = "Ubuntu Server 18.04 image with Packer and preseeding for Proxmox"
 slug = "ubuntu-server-1804-image-packer-preseeding-for-proxmox"
 date = "2019-12-15T19:15:00+01:00"
-lastmod = "2020-05-13T18:26:00+02:00"
+lastmod = "2020-05-13T18:36:00+02:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
 aliases = ["/posts/ubuntu-image-with-packer-and-ansible-for-proxmox/"]
 +++
 
 {{< alert "info" "question" >}}
-Even if the article focuses on Ubuntu Server 18.04, it has been tested successfully for Ubuntu Server 19.04 and Ubuntu Server 19.10.
+Even if the article focuses on Ubuntu Server 18.04, it has been tested successfully for Ubuntu Server 19.04 and Ubuntu Server 19.10. For Ubuntu Server 20.04, [another post]({{< relref "ubuntu-server-2004-image-packer-subiquity-for-proxmox.md" >}}) covers this topic.
 {{< /alert >}}
 
 If you read my previous post, time has passed since then. I have ditched my Raspberry Pi 3B+ and Hassbian for a dedicated Intel NUC with Proxmox and Hass.io [^1]. But this is not the subject of this post.
