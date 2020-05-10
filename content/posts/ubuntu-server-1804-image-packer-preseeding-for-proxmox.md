@@ -1,14 +1,15 @@
 +++
-title = "Ubuntu 18.04 image with Packer and Ansible for Proxmox"
-slug = "ubuntu-image-with-packer-and-ansible-for-proxmox"
+title = "Ubuntu Server 18.04 image with Packer and preseeding for Proxmox"
+slug = "ubuntu-server-1804-image-packer-preseeding-for-proxmox"
 date = "2019-12-15T19:15:00+01:00"
-lastmod = "2020-04-11T19:02:00+02:00"
+lastmod = "2020-05-01T20:21:00+02:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
+aliases = ["/posts/ubuntu-image-with-packer-and-ansible-for-proxmox/"]
 +++
 
-{{< alert "info" >}}
-Even if the article focuses on Ubuntu 18.04,  it has been tested successfully for Ubuntu 19.04 and Ubuntu 19.10.
+{{< alert "info" "question" >}}
+Even if the article focuses on Ubuntu Server 18.04, it has been tested successfully for Ubuntu Server 19.04 and Ubuntu Server 19.10.
 {{< /alert >}}
 
 If you read my previous post, time has passed since then. I have ditched my Raspberry Pi 3B+ and Hassbian for a dedicated Intel NUC with Proxmox and Hass.io [^1]. But this is not the subject of this post.
@@ -59,52 +60,46 @@ Packer needs a JSON configuration file to work with two main sections: builders 
 
 ```json
 {
-    "builders": [
-        {
-            "type": "proxmox",
-            "proxmox_url": "https://proxmox.madalynn.xyz:8006/api2/json",
-            "username": "{{ user `username` }}",
-            "password": "{{ user `password` }}",
-            "node": "proxmox",
-            "network_adapters": [
-                {
-                    "bridge": "vmbr0"
-                }
-            ],
-            "disks": [
-                {
-                    "type": "scsi",
-                    "disk_size": "20G",
-                    "storage_pool": "local-lvm",
-                    "storage_pool_type": "lvm"
-                }
-            ],
-            "iso_file": "local:iso/ubuntu-18.04.3-server-amd64.iso",
-            "unmount_iso": true,
-            "template_name": "ubuntu-18.04",
-            "http_directory": "config",
-            "boot_command": [
-                "<esc><wait><esc><wait><enter><wait>",
-                "/install/vmlinuz ",
-                "initrd=/install/initrd.gz ",
-                "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
-                "auto=true ",
-                "priority=critical ",
-                "-- <enter>"
-            ],
-            "ssh_username": "madalynn",
-            "ssh_password": "madalynn"
-        }
-    ]
-}
+  "builders": [{
+    "type": "proxmox",
+    "proxmox_url": "https://proxmox.madalynn.xyz/api2/json",
+    "username": "{{ user `proxmox_username` }}",
+    "password": "{{ user `proxmox_password` }}",
+    "node": "proxmox",
+    "network_adapters": [{
+      "bridge": "vmbr0"
+    }],
+    "disks": [{
+      "type": "scsi",
+      "disk_size": "20G",
+      "storage_pool": "local-lvm",
+      "storage_pool_type": "lvm"
+    }],
+    "iso_file": "local:iso/ubuntu-18.04.3-server-amd64.iso",
+    "unmount_iso": true,
+    "template_name": "ubuntu-18.04",
+    "http_directory": "config",
+    "boot_command": [
+      "<esc><wait><esc><wait><enter><wait>",
+      "/install/vmlinuz ",
+      "initrd=/install/initrd.gz ",
+      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+      "auto=true ",
+      "priority=critical ",
+      "-- <enter>"
+    ],
+    "ssh_username": "madalynn",
+    "ssh_password": "madalynn"
+  }
+]}
 ```
 
 The username and password for the Proxmox connection will be store in another JSON file (that you can gitignore).
 
 ```json
 {
-    "username": "packer@pve",
-    "password": "fQk9f5Wd22aBgv"
+  "proxmox_username": "packer@pve",
+  "proxmox_password": "fQk9f5Wd22aBgv"
 }
 ```
 
@@ -187,14 +182,12 @@ This is where Packer provisioners will help. Provisioners are a way to execute c
 
 ```json
 {
-    ...
-    "provisioners": [
-        {
-            "type": "shell",
-            "execute_command": "echo 'madalynn' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'",
-            "script": "scripts/setup.sh"
-        }
-    ]
+  ...
+  "provisioners": [{
+    "type": "shell",
+    "execute_command": "echo 'madalynn' | {{ .Vars }} sudo -S -E bash '{{ .Path }}'",
+    "script": "scripts/setup.sh"
+  }]
 }
 ```
 
@@ -215,14 +208,13 @@ The second provisioner will launch an Ansible playbook to add the public key for
 
 ```json
 {
+  ...
+  "provisioners": [{
     ...
-    "provisioners": [
-        ...
-        {
-            "type": "ansible",
-            "playbook_file": "./ansible/provisioning.yml"
-        }
-    ]
+  }, {
+    "type": "ansible",
+    "playbook_file": "./ansible/provisioning.yml"
+  }]
 }
 ```
 

@@ -2,12 +2,32 @@
   border: 0px !important;
 }
 
+.post img {
+  display: block;
+  margin: auto;
+}
+
 .alert {
   position: relative;
   padding: .75rem 1.25rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: .5rem;
+}
+
+.alert p {
+  margin-top: 0;
+}
+
+.alert .fa {
+  margin: 0.75rem 0.75rem 0 0;
+  float: left;
+}
+
+@media only screen and (max-width: 768px) {
+  .alert .fa {
+    margin: 0.30rem 0.50rem 0 0;
+  }
 }
 
 .alert-primary {
