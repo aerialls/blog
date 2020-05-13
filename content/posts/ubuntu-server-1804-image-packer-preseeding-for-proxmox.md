@@ -2,7 +2,7 @@
 title = "Ubuntu Server 18.04 image with Packer and preseeding for Proxmox"
 slug = "ubuntu-server-1804-image-packer-preseeding-for-proxmox"
 date = "2019-12-15T19:15:00+01:00"
-lastmod = "2020-05-01T20:21:00+02:00"
+lastmod = "2020-05-13T18:26:00+02:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
 aliases = ["/posts/ubuntu-image-with-packer-and-ansible-for-proxmox/"]
@@ -16,13 +16,13 @@ If you read my previous post, time has passed since then. I have ditched my Rasp
 
 With my love to automate things, I was looking for a way to generate a base Ubuntu image for Proxmox to use it later on with Ansible for severals VMs (Home-Assistant is just one example).
 
-# Introduction
+## Introduction
 
 [Packer](https://www.packer.io/) is here to help. Packer will generate a base image usable in Proxmox as a template. To make it easier, Packer has a Proxmox builder for six months now.
 
 Packer will use the builder to contact Proxmox to start a new VM and launch the setup from the boot command. When the setup is done, it's possible to execute some additional tasks with several provisioners.
 
-# Proxmox
+## Proxmox
 
 The first thing is to create a dedicated user for Packer in Proxmox. In the datacenter view on your Proxmox web-interface, create a new role `Packer` with the following privileges (all privileges are required).
 
@@ -36,6 +36,7 @@ The first thing is to create a dedicated user for Packer in Proxmox. In the data
 * VM.Config.Network
 * VM.Config.Options
 * VM.Config.HWType
+* VM.Console
 * VM.PowerMgmt
 * VM.Monitor
 * Sys.Modify
@@ -50,9 +51,9 @@ And to finish, link the user and the role to the main path `/` in the `Permissio
 
 ![Packer permission in Proxmox](/images/proxmox/packer-permission.png)
 
-# Packer
+## Packer
 
-Download the latest Ubuntu Server 18.04 from the [official website](http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.3-server-amd64.iso). Put the image inside an `iso` folder in the local storage in your Proxmox cluster.
+Download the latest Ubuntu Server 18.04 from the [official website](http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/). Put the image inside an `iso` folder in the local storage in your Proxmox cluster.
 
 ![Local storage in Proxmox](/images/proxmox/storage.png)
 
@@ -75,7 +76,7 @@ Packer needs a JSON configuration file to work with two main sections: builders 
       "storage_pool": "local-lvm",
       "storage_pool_type": "lvm"
     }],
-    "iso_file": "local:iso/ubuntu-18.04.3-server-amd64.iso",
+    "iso_file": "local:iso/ubuntu-18.04.4-server-amd64.iso",
     "unmount_iso": true,
     "template_name": "ubuntu-18.04",
     "http_directory": "config",
@@ -109,7 +110,7 @@ The preseed file will be responsible to configure every aspects of your VM (from
 
 The `preseed.cfg` file needs to be locally inside the `config` directory (or you will need to update the field `http_directory` in the JSON configuration).
 
-```
+```text
 .
 ├── config
 │   └── preseed.cfg
@@ -118,7 +119,7 @@ The `preseed.cfg` file needs to be locally inside the `config` directory (or you
 
 Here is an example of what the file looks like.
 
-```
+```text
 # LOCALE
 d-i debian-installer/locale string en_US
 
@@ -174,7 +175,7 @@ packer build -var-file=secrets.json ubuntu.json
 
 At the end of the process, the VM template will be fully configured (packages are up to date, the LVM partition is created) and an user account will also be created (`madalynn`/`madalynn`).
 
-# Ansible
+## Ansible
 
 At this step, the template can be used for new machines. Just clone the template, give it a name and voilà. However, the VM cannot be used in Ansible directly. Some extra configuration is needed to allow Ansible to connect to it with a SSH key and also to be able to run `sudo` commands without passwords.
 
