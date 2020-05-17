@@ -32,6 +32,9 @@ disqusShortname = "aerialls"
 
     custom_css = ["css/custom.css"]
 
+[params.fathomAnalytics]
+    siteID = "885433"
+
 [taxonomies]
   category = "categories"
   tag = "tags"
