@@ -27,6 +27,8 @@ disqusShortname = "aerialls"
     hidecredits = false
     hidecopyright = false
 
+    colorscheme = "dark"
+
     rtl = false
     commit = "https://github.com/aerialls/www.aerialls.io/commit"
 
