@@ -1,6 +1,6 @@
 +++
 title = "Dynamic DNS records with Scaleway DNS"
-slug = "dynamic-dns-ddns-scaleway-dns"
+slug = "dynamic-dns-records-scaleway-dns"
 date = "2020-08-09T12:06:00+02:00"
 lastmod = "2020-08-09T12:06:00+02:00"
 categories = ["automation"]
