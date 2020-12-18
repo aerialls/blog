@@ -2,18 +2,18 @@
 title = "Ubuntu Server 20.04 image with Packer and Subiquity for Proxmox"
 slug = "ubuntu-server-2004-image-packer-subiquity-for-proxmox"
 date = "2020-05-13T18:31:00+02:00"
-lastmod = "2020-05-13T18:31:00+02:00"
+lastmod = "2020-12-18T23:18:00+01:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox"]
 +++
 
-Starting with 20.04, Ubuntu decided to update the live server installer to implement the [autoinstall specification](https://wiki.ubuntu.com/FoundationsTeam/AutomatedServerInstalls) to be able to fully automate the install process using only Subiquity. Subiquity is the new server installer (aka "ubiquity for servers") and aims to replace the previous classic system based on debian-installer.
+Starting with 20.04, Ubuntu decided to update the live server installer to implement the [autoinstall specification](https://ubuntu.com/server/docs/install/autoinstall) to be able to fully automate the install process using only Subiquity. Subiquity is the new server installer (aka "ubiquity for servers") and aims to replace the previous classic system based on debian-installer.
 
 This article illustrates how to generate an Ubuntu Server 20.04 image template using Packer and only Subiquity on Proxmox.
 
 ## Introduction
 
-Subiquity is only available in the `live` version of the image file (for instance `ubuntu-20.04-live-server-amd64.iso`). The previous system based on debian-installer (preseed files) has been discontinued and won't work anymore.
+Subiquity is only available in the `live` version of the image file (for instance `ubuntu-20.04.1-live-server-amd64.iso`). The previous system based on debian-installer (preseed files) has been discontinued and won't work anymore.
 
 {{< alert "info" "feather" >}}
 It's still possible to use debian-installer by downloading the legacy server image that can be found in a dedicated folder `ubuntu-legacy-server` on the official [Ubuntu images repository](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/).
@@ -45,7 +45,7 @@ $ pveum aclmod / -user packer@pve -role Packer
 Proxmox `pveum` is available through a SSH connection or from the web shell accessible under the node parameters on the UI.
 {{< /alert >}}
 
-Download the Ubuntu Server 20.04 ISO from [the images repository](http://releases.ubuntu.com/20.04/). At the time of writing, the latest version available was `ubuntu-20.04-live-server-amd64.iso`. Put the ISO inside the `local` storage under the `ISO image` category.
+Download the Ubuntu Server 20.04 ISO from [the images repository](http://releases.ubuntu.com/20.04/). At the time of writing, the latest version available was `ubuntu-20.04.1-live-server-amd64.iso`. Put the ISO inside the `local` storage under the `ISO image` category.
 
 ![Local storage in Proxmox](/images/proxmox/storage.png)
 
@@ -74,7 +74,7 @@ Technically, Packer will start a VM in Proxmox, launch the installer from the bo
       "storage_pool": "local-lvm",
       "storage_pool_type": "lvm"
     }],
-    "iso_file": "local:iso/ubuntu-20.04-live-server-amd64.iso",
+    "iso_file": "local:iso/ubuntu-20.04.1-live-server-amd64.iso",
     "unmount_iso": true,
     "boot_wait": "5s",
     "memory": 1024,
@@ -87,12 +87,15 @@ Technically, Packer will start a VM in Proxmox, launch the installer from the bo
       "--- <enter>"
     ],
     "ssh_username": "madalynn",
-    "ssh_password": "madalynn"
+    "ssh_password": "madalynn",
+    "ssh_timeout": "20m"
   }]
 }
 ```
 
-The majority of the parameters are pretty straightforward to understand. Launch Packer with the following command.
+The majority of the parameters are pretty straightforward to understand. The `ssh_timeout` will give time to the installer to download the latest security updates during the setup.
+
+Launch Packer with the following command.
 
 ```bash
 $ packer build -var-file=secrets.json ubuntu.json
@@ -152,7 +155,7 @@ Technically speaking, the easiest solution is to wait until the `/var/lib/cloud/
 }
 ```
 
-Provisioners will be executed directly on the VM once the SSH connection is available. Packer supports [a lot of provisioners](https://www.packer.io/docs/provisioners/index.html). For instance, it's possible in this step to launch an Ansible playbook or to configure the Chef client.
+Provisioners will be executed directly on the VM once the SSH connection is available. Packer supports [a lot of provisioners](https://www.packer.io/docs/provisioners). For instance, it's possible in this step to launch an Ansible playbook or to configure the Chef client.
 
 ## Cloud-init
 
@@ -180,7 +183,7 @@ autoinstall:
 Unlike a classic cloud-init file, everything must be under the `autoinstall` key. The rest will be ignored.
 {{< /alert >}}
 
-The [official documentation](https://wiki.ubuntu.com/FoundationsTeam/AutomatedServerInstalls) lists all available parameters that can be configured. The scope is reduced compared to what was possible with debian-installer but Subiquity gives the ability to use all other [cloud-init modules](https://cloudinit.readthedocs.io/en/latest/topics/modules.html) to compensate.
+The [official documentation](https://ubuntu.com/server/docs/install/autoinstall-reference) lists all available parameters that can be configured. The scope is reduced compared to what was possible with debian-installer but Subiquity gives the ability to use all other [cloud-init modules](https://cloudinit.readthedocs.io/en/latest/topics/modules.html) to compensate.
 
 {{< alert "info" "tools" >}}
 Under the hood, Subiquity will be able to handle some actions by itself (like partitioning) and will generate a cloud-init config file that will be executed after a reboot for the rest.
