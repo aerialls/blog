@@ -11,10 +11,6 @@ Dynamic DNS (DDNS) is a service that keeps the DNS updated with the correct IP a
 
 [Scaleway](https://www.scaleway.com/) offers a DNS service with an API available. It gives the possibility to host DNS zones & records and can be configured manually from the web console or through the API. The developers documentation for the API is available [here](https://developers.scaleway.com/en/products/domain/api/). Both nameservers (`ns0.dom.scw.cloud` and `ns1.dom.scw.cloud`) are hosted in France.
 
-{{< alert "warning" "exclamation-triangle" >}}
-Scaleway DNS is currently in public beta with no service guarantee. Although the service is stable, it should not be used in production environments yet.
-{{< /alert >}}
-
 This article explains how to register dynamic DNS records with Scaleway DNS using `scaleway-ddns`, a software specially designed for this purpose. It's available on Linux, macOS and Windows.
 
 The first step is to download [the latest version on GitHub](https://github.com/aerialls/scaleway-ddns/releases).
