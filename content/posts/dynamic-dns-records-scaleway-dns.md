@@ -2,14 +2,14 @@
 title = "Dynamic DNS records with Scaleway DNS"
 slug = "dynamic-dns-records-scaleway-dns"
 date = "2020-08-09T12:06:00+02:00"
-lastmod = "2020-08-09T12:06:00+02:00"
+lastmod = "2020-12-19T17:05:00+01:00"
 categories = ["automation"]
 tags = ["ddns", "scaleway"]
 +++
 
 Dynamic DNS (DDNS) is a service that keeps the DNS updated with the correct IP address, even if that IP address is being updated. It is particularly interesting for places where the IP address is dynamic and also needs to be tracked with a DNS record (for remote connection for instance). This situation is particularly common as some ISPs do not commit to static IP addresses.
 
-[Scaleway](https://www.scaleway.com/) offers a DNS service with an API available. It gives the possibility to host DNS zones & records and can be configured manually from the web console or through the API. The developers documentation for the API is available [here](https://developers.scaleway.com/en/products/domain/api/). Both nameservers (`ns0.scaleway.com` and `ns1.scaleway.com`) are hosted in France.
+[Scaleway](https://www.scaleway.com/) offers a DNS service with an API available. It gives the possibility to host DNS zones & records and can be configured manually from the web console or through the API. The developers documentation for the API is available [here](https://developers.scaleway.com/en/products/domain/api/). Both nameservers (`ns0.dom.scw.cloud` and `ns1.dom.scw.cloud`) are hosted in France.
 
 {{< alert "warning" "exclamation-triangle" >}}
 Scaleway DNS is currently in public beta with no service guarantee. Although the service is stable, it should not be used in production environments yet.
@@ -20,8 +20,8 @@ This article explains how to register dynamic DNS records with Scaleway DNS usin
 The first step is to download [the latest version on GitHub](https://github.com/aerialls/scaleway-ddns/releases).
 
 ```bash
-$ curl -sLO https://github.com/aerialls/scaleway-ddns/releases/download/v0.1.2/scaleway-ddns_0.1.2_linux_amd64.tar.gz
-$ tar xf scaleway-ddns_0.1.2_linux_amd64.tar.gz
+$ curl -sLO https://github.com/aerialls/scaleway-ddns/releases/download/v0.2.0/scaleway-ddns_0.2.0_linux_amd64.tar.gz
+$ tar xf scaleway-ddns_0.2.0_linux_amd64.tar.gz
 ```
 
 {{< alert "success" "server" >}}
@@ -33,7 +33,7 @@ The software is designed to run in the background to detect new IP addresses at 
 Move the downloaded file to the `/usr/local/bin` directory and make sure the binary can be executed.
 
 ```bash
-$ mv scaleway-ddns_0.1.2_linux_amd64/scaleway-ddns /usr/local/bin
+$ mv scaleway-ddns_0.2.0_linux_amd64/scaleway-ddns /usr/local/bin
 $ chmod a+x /usr/local/bin/scaleway-ddns
 ```
 
@@ -41,12 +41,12 @@ In order to work, the software needs a YAML config file which contains the crede
 
 ```yaml
 scaleway:
-  organization_id: b84d38dd-48b2-acde-0af89ff0f24e
+  project_id: b84d38dd-48b2-acde-0af89ff0f24e
   access_key: SCW7XVT60TF2ECM2EK0A
   secret_key: 418c21eb-ec4c-9df0-e4b5029d2d55
 ```
 
-The `organization_id` can be found under the **Credentials** page of the **Organization Account** section on the [Scaleway console](https://console.scaleway.com/account/organization/credentials). Generate a new token to obtain the `access_key` and the `secret_key`.
+The `project_id` can be found under the **Credentials** page of the **Project dashboard** section on the [Scaleway console](https://console.scaleway.com/project/credentials). Generate a new token to obtain the `access_key` and the `secret_key`.
 
 ![Scaleway API Tokens](/images/scaleway/api-tokens.png)
 
@@ -132,7 +132,7 @@ The previous example will work only if the user and group `scaleway-ddns` exists
 
 ```yaml
 scaleway:
-  organization_id: b84d38dd-48b2-acde-0af89ff0f24e
+  project_id: b84d38dd-48b2-acde-0af89ff0f24e
   access_key: SCW7XVT60TF2ECM2EK0A
   secret_key: 418c21eb-ec4c-9df0-e4b5029d2d55
 
