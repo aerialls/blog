@@ -1,4 +1,4 @@
-baseurl = "https://www.aerialls.io"
+baseURL = "https://www.aerialls.io"
 title = "Julien Brochet"
 theme = "hugo-coder"
 languageCode = "en"
@@ -6,7 +6,7 @@ defaultContentLanguage = "en"
 enableGitInfo = true
 
 paginate = 20
-canonifyurls = true
+canonifyURLs = true
 
 pygmentsStyle = "monokai"
 pygmentsCodeFences = true
@@ -17,22 +17,23 @@ disqusShortname = "aerialls"
 [params]
     author = "Julien Brochet"
     info = "Site Reliability Engineer between two reboots"
-    description = "Julien Brochet's personal website"
+    description = "Julien Brochet's personal blog"
     keywords = "blog,sre,sysadmin,personal"
-    avatarurl = "images/persona.png"
+    avatarURL = "images/persona.png"
 
     favicon_32 = "/icons/favicon-32x32.png"
     favicon_16 = "/icons/favicon-16x16.png"
 
-    hidecredits = false
-    hidecopyright = false
+    hideCredits = false
+    hideCopyright = false
 
-    colorscheme = "dark"
+    colorScheme = "dark"
+    hideColorSchemeToggle = true
 
     rtl = false
     commit = "https://github.com/aerialls/www.aerialls.io/commit"
 
-    custom_css = ["css/custom.css"]
+    customCSS = ["css/custom.css"]
 
 [params.fathomAnalytics]
     siteID = "885433"
@@ -43,22 +44,22 @@ disqusShortname = "aerialls"
 
 [[params.social]]
     name = "Github"
-    icon = "fab fa-github fa-2x"
+    icon = "fa fa-github"
     weight = 1
     url = "https://github.com/aerialls"
 [[params.social]]
     name = "Twitter"
-    icon = "fab fa-twitter fa-2x"
+    icon = "fa fa-twitter"
     weight = 3
     url = "https://twitter.com/aerialls"
 [[params.social]]
     name = "LinkedIn"
-    icon = "fab fa-linkedin fa-2x"
+    icon = "fa fa-linkedin"
     weight = 4
     url = "https://www.linkedin.com/in/julienbrochet/"
 [[params.social]]
     name = "Flickr"
-    icon = "fab fa-flickr fa-2x"
+    icon = "fa fa-flickr"
     weight = 5
     url = "https://www.flickr.com/photos/aerialls/"
 
