@@ -1,4 +1,4 @@
-baseURL = "https://www.aerialls.io"
+baseURL = "https://www.aerialls.eu"
 title = "Julien Brochet"
 theme = "hugo-coder"
 languageCode = "en"
@@ -31,7 +31,7 @@ disqusShortname = "aerialls"
     hideColorSchemeToggle = true
 
     rtl = false
-    commit = "https://github.com/aerialls/www.aerialls.io/commit"
+    commit = "https://github.com/aerialls/www.aerialls.eu/commit"
 
     customCSS = ["css/custom.css"]
 

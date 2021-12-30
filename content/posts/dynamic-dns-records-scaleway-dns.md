@@ -46,7 +46,7 @@ The `project_id` can be found under the **Credentials** page of the **Project da
 
 ![Scaleway API Tokens](/images/scaleway/api-tokens.png)
 
-The next step is to make sure that the domain is registered on Scaleway DNS. The [web console](https://console.scaleway.com/domains/external) or the [public API](https://developers.scaleway.com/en/products/domain/api/) can be used for that. For now, it's only possible to register top domain (for instance `aerialls.io` and not `ddns.aerialls.io`). Follow the workflow to add the domain. In the end, it should be visible on the web console.
+The next step is to make sure that the domain is registered on Scaleway DNS. The [web console](https://console.scaleway.com/domains/external) or the [public API](https://developers.scaleway.com/en/products/domain/api/) can be used for that. For now, it's only possible to register top domain (for instance `aerialls.eu` and not `ddns.aerialls.eu`). Follow the workflow to add the domain. In the end, it should be visible on the web console.
 
 ![Scaleway Domains](/images/scaleway/domains.png)
 
