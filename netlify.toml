@@ -13,7 +13,13 @@ command = "hugo --gc --minify --buildDrafts --buildFuture -b $DEPLOY_PRIME_URL"
 command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
 
 [[redirects]]
-  from = "https://aerialls.netlify.app"
-  to = "https://www.aerialls.eu"
-  status = 301
-  force = true
+from = "https://aerialls.netlify.app"
+to = "https://www.aerialls.eu"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://www.aerialls.io/*"
+to = "https://www.aerialls.eu/:splat"
+status = 301
+force = true
