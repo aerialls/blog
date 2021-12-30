@@ -17,9 +17,3 @@ command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
   to = "https://www.aerialls.eu"
   status = 301
   force = true
-
-[[redirects]]
-  from = "https://www.aerialls.io/*"
-  to = "https://www.aerialls.eu/:splat"
-  status = 301
-  force = true
