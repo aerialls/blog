@@ -14,18 +14,12 @@ command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
 
 [[redirects]]
   from = "https://aerialls.netlify.app"
-  to = "https://www.aerialls.io"
+  to = "https://www.aerialls.eu"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://julienbrochet.fr"
-  to = "https://www.aerialls.io"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.julienbrochet.fr"
-  to = "https://www.aerialls.io"
+  from = "https://www.aerialls.io"
+  to = "https://www.aerialls.eu"
   status = 301
   force = true
