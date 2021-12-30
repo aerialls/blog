@@ -15,59 +15,65 @@ pygmentsCodeFencesGuessSyntax = true
 disqusShortname = "aerialls"
 
 [params]
-    author = "Julien Brochet"
-    info = "Site Reliability Engineer between two reboots"
-    description = "Julien Brochet's personal blog"
-    keywords = "blog,sre,sysadmin,personal"
-    avatarURL = "images/persona.png"
+author = "Julien Brochet"
+info = "Site Reliability Engineer between two reboots"
+description = "Julien Brochet's personal blog"
+keywords = "blog,sre,sysadmin,personal"
+avatarURL = "images/persona.png"
+since = "2018"
 
-    favicon_32 = "/icons/favicon-32x32.png"
-    favicon_16 = "/icons/favicon-16x16.png"
+favicon_32 = "/icons/favicon-32x32.png"
+favicon_16 = "/icons/favicon-16x16.png"
 
-    hideCredits = false
-    hideCopyright = false
+hideCredits = false
+hideCopyright = false
 
-    colorScheme = "dark"
-    hideColorSchemeToggle = true
+colorScheme = "dark"
+hideColorSchemeToggle = true
 
-    rtl = false
-    commit = "https://github.com/aerialls/www.aerialls.eu/commit"
+rtl = false
+commit = "https://github.com/aerialls/www.aerialls.eu/commit"
 
-    customCSS = ["css/custom.css"]
+customCSS = ["css/custom.css"]
 
-[params.fathomAnalytics]
-    siteID = "885433"
+[params.matomo]
+siteID = "885433"
+serverURL = "matomo.madalynn.fr"
 
 [taxonomies]
-  category = "categories"
-  tag = "tags"
+category = "categories"
+tag = "tags"
 
 [[params.social]]
-    name = "Github"
-    icon = "fa fa-github"
-    weight = 1
-    url = "https://github.com/aerialls"
+name = "Github"
+icon = "fa fa-2x fa-github"
+weight = 1
+url = "https://github.com/aerialls"
+
 [[params.social]]
-    name = "Twitter"
-    icon = "fa fa-twitter"
-    weight = 3
-    url = "https://twitter.com/aerialls"
+name = "Twitter"
+icon = "fa fa-2x fa-twitter"
+weight = 2
+url = "https://twitter.com/aerialls"
+
 [[params.social]]
-    name = "LinkedIn"
-    icon = "fa fa-linkedin"
-    weight = 4
-    url = "https://www.linkedin.com/in/julienbrochet/"
+name = "LinkedIn"
+icon = "fa fa-2x fa-linkedin"
+weight = 3
+url = "https://www.linkedin.com/in/julienbrochet/"
+
 [[params.social]]
-    name = "Flickr"
-    icon = "fa fa-flickr"
-    weight = 5
-    url = "https://www.flickr.com/photos/aerialls/"
+name = "Flickr"
+icon = "fa fa-2x fa-flickr"
+weight = 4
+url = "https://www.flickr.com/photos/aerialls/"
 
 [[menu.main]]
-    name = "Blog"
-    weight = 1
-    url  = "/posts/"
+name = "Blog"
+weight = 1
+url  = "/posts/"
+
 [[menu.main]]
-    name = "About"
-    weight = 2
-    url  = "/about/"
+name = "About"
+weight = 2
+url  = "/about/"
