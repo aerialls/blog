@@ -37,7 +37,7 @@ commit = "https://github.com/aerialls/www.aerialls.eu/commit"
 customCSS = ["css/custom.css"]
 
 [params.matomo]
-siteID = "885433"
+siteID = "1"
 serverURL = "matomo.madalynn.fr"
 
 [taxonomies]
