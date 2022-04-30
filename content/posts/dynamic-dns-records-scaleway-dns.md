@@ -2,7 +2,7 @@
 title = "Dynamic DNS records with Scaleway DNS"
 slug = "dynamic-dns-records-scaleway-dns"
 date = "2020-08-09T12:06:00+02:00"
-lastmod = "2020-12-19T17:05:00+01:00"
+lastmod = "2022-04-30T19:00:00+02:00"
 categories = ["automation"]
 tags = ["ddns", "scaleway"]
 +++
@@ -20,9 +20,9 @@ $ curl -sLO https://github.com/aerialls/scaleway-ddns/releases/download/v0.2.0/s
 $ tar xf scaleway-ddns_0.2.0_linux_amd64.tar.gz
 ```
 
-{{< alert "success" "server" >}}
+{{< notice note >}}
 The source code is available on GitHub at [aerialls/scaleway-ddns](https://github.com/aerialls/scaleway-ddns).
-{{< /alert >}}
+{{< /notice >}}
 
 The software is designed to run in the background to detect new IP addresses at regular intervals and automatically perform DNS changes if necessary.
 
@@ -73,9 +73,9 @@ ipv6:
   url: https://api-ipv6.ip.sb/ip
 ```
 
-{{< alert "info" "keyboard" >}}
+{{< notice note >}}
 HTTP endpoints should directly return the IP address with a plain text response.
-{{< /alert >}}
+{{< /notice >}}
 
 It's also possible to specify the interval between two checks with the `interval` key (in seconds). The default value is set at 60 seconds. The following configuration will check every 5 minutes if the IP has changed. Note that it's not possible to go lower than 60 seconds.
 

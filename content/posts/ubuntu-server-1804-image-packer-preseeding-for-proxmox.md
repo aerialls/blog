@@ -2,15 +2,15 @@
 title = "Ubuntu Server 18.04 image with Packer and preseeding for Proxmox"
 slug = "ubuntu-server-1804-image-packer-preseeding-for-proxmox"
 date = "2019-12-15T19:15:00+01:00"
-lastmod = "2020-05-13T18:36:00+02:00"
+lastmod = "2022-04-30T19:00:00+02:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox", "ansible"]
 aliases = ["/posts/ubuntu-image-with-packer-and-ansible-for-proxmox/"]
 +++
 
-{{< alert "info" "question" >}}
+{{< notice note >}}
 Even if the article focuses on Ubuntu Server 18.04, it has been tested successfully for Ubuntu Server 19.04 and Ubuntu Server 19.10. For Ubuntu Server 20.04, [another post]({{< relref "ubuntu-server-2004-image-packer-subiquity-for-proxmox.md" >}}) covers this topic.
-{{< /alert >}}
+{{< /notice >}}
 
 If you read my previous post, time has passed since then. I have ditched my Raspberry Pi 3B+ and Hassbian for a dedicated Intel NUC with Proxmox and Hass.io [^1]. But this is not the subject of this post.
 
@@ -76,7 +76,7 @@ Packer needs a JSON configuration file to work with two main sections: builders 
       "storage_pool": "local-lvm",
       "storage_pool_type": "lvm"
     }],
-    "iso_file": "local:iso/ubuntu-18.04.4-server-amd64.iso",
+    "iso_file": "local:iso/ubuntu-18.04.6-server-amd64.iso",
     "unmount_iso": true,
     "template_name": "ubuntu-18.04",
     "http_directory": "config",
@@ -104,7 +104,7 @@ The username and password for the Proxmox connection will be store in another JS
 }
 ```
 
-The previous configuration will create a new VM template named `ubuntu-18.04` based on `ubuntu-18.04.3-server-amd64.iso` with a 20G disk. Proxmox will try to load and execute a preseed file from an HTTP endpoint (started by Packer during the provisioning).
+The previous configuration will create a new VM template named `ubuntu-18.04` based on `ubuntu-18.04.6-server-amd64.iso` with a 20G disk. Proxmox will try to load and execute a preseed file from an HTTP endpoint (started by Packer during the provisioning).
 
 The preseed file will be responsible to configure every aspects of your VM (from the keyboard to the disk partitions or even the user creation...). It's a text fle with several instructions to specify what need to be configured.
 

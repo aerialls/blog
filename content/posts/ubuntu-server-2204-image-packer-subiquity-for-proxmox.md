@@ -1,27 +1,13 @@
 +++
-title = "Ubuntu Server 20.04 image with Packer and Subiquity for Proxmox"
-slug = "ubuntu-server-2004-image-packer-subiquity-for-proxmox"
-date = "2020-05-13T18:31:00+02:00"
+title = "Ubuntu Server 22.04 image with Packer and Subiquity for Proxmox"
+slug = "ubuntu-server-2204-image-packer-subiquity-for-proxmox"
+date = "2022-04-30T19:00:00+02:00"
 lastmod = "2022-04-30T19:00:00+02:00"
 categories = ["automation"]
 tags = ["ubuntu", "packer", "proxmox"]
 +++
 
-{{< notice note >}}
-For Ubuntu Server 22.04, [another post]({{< relref "ubuntu-server-2204-image-packer-subiquity-for-proxmox.md" >}}) covers this topic.
-{{< /notice >}}
-
-Starting with 20.04, Ubuntu decided to update the live server installer to implement the [autoinstall specification](https://ubuntu.com/server/docs/install/autoinstall) to be able to fully automate the install process using only Subiquity. Subiquity is the new server installer (aka "ubiquity for servers") and aims to replace the previous classic system based on debian-installer.
-
-This article illustrates how to generate an Ubuntu Server 20.04 image template using Packer and only Subiquity on Proxmox.
-
-## Introduction
-
-Subiquity is only available in the `live` version of the image file (for instance `ubuntu-20.04.4-live-server-amd64.iso`). The previous system based on debian-installer (preseed files) has been discontinued and won't work anymore.
-
-{{< notice tip >}}
-It's still possible to use debian-installer by downloading the legacy server image that can be found in a dedicated folder `ubuntu-legacy-server` on the official [Ubuntu images repository](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/).
-{{< /notice >}}
+This article illustrates how to generate an Ubuntu Server 22.04 image template using Packer and only Subiquity on Proxmox.
 
 ## Subiquity
 
@@ -30,7 +16,7 @@ This new live system is based on cloud-init and uses a YAML file to fully automa
 - The syntax is much easier to understand (YAML vs debconf-set-selections format).
 - It's possible to have hybrid situations where some sections can be interactive and others answered automatically from the configuration.
 
-![Subiquity setup in Ubuntu Server 20.04](/images/ubuntu/subiquity.png)
+![Subiquity setup in Ubuntu Server 22.04](/images/ubuntu/subiquity.png)
 
 ## Proxmox
 
@@ -49,7 +35,7 @@ $ pveum aclmod / -user packer@pve -role Packer
 Proxmox `pveum` is available through an SSH connection or from the web shell accessible under the node parameters on the UI.
 {{< /notice >}}
 
-Download the Ubuntu Server 20.04 ISO from [the images repository](http://releases.ubuntu.com/20.04/). At the time of writing, the latest version available was `ubuntu-20.04.4-live-server-amd64.iso`. Put the ISO inside the `local` storage under the `ISO image` category.
+Download the Ubuntu Server 22.04 ISO from [the image repository](http://releases.ubuntu.com/22.04/). At the time of writing, the latest version available was `ubuntu-22.04-live-server-amd64.iso`. Put the ISO inside the `local` storage under the `ISO image` category.
 
 ![Local storage in Proxmox](/images/proxmox/storage.png)
 
@@ -78,17 +64,18 @@ Technically, Packer will start a VM in Proxmox, launch the installer from the bo
       "storage_pool": "local-lvm",
       "storage_pool_type": "lvm"
     }],
-    "iso_file": "local:iso/ubuntu-20.04.4-live-server-amd64.iso",
+    "iso_file": "local:iso/ubuntu-22.04-live-server-amd64.iso",
     "unmount_iso": true,
     "boot_wait": "5s",
     "memory": 1024,
-    "template_name": "ubuntu-20.04",
+    "template_name": "ubuntu-22.04",
     "http_directory": "http",
     "boot_command": [
-      "<esc><wait><esc><wait><f6><wait><esc><wait>",
-      "<bs><bs><bs><bs><bs>",
-      "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
-      "--- <enter>"
+      "c",
+      "linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ",
+      "<enter><wait>",
+      "initrd /casper/initrd<enter><wait>",
+      "boot<enter>"
     ],
     "ssh_username": "madalynn",
     "ssh_password": "madalynn",
@@ -134,10 +121,11 @@ The boot command tells cloud-init to start and uses the `nocloud-net` data sourc
 {
   ...
   "boot_command": [
-    "<esc><wait><esc><wait><f6><wait><esc><wait>",
-    "<bs><bs><bs><bs><bs>",
-    "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
-    "--- <enter>"
+    "c",
+    "linux /casper/vmlinuz --- autoinstall ds='nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ",
+    "<enter><wait>",
+    "initrd /casper/initrd<enter><wait>",
+    "boot<enter>"
   ],
   ...
 }
@@ -156,7 +144,7 @@ Technically speaking, the easiest solution is to wait until the `/var/lib/cloud/
     "inline": [
       "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
     ]
-}
+  }
 ```
 
 Provisioners will be executed directly on the VM once the SSH connection is available. Packer supports [a lot of provisioners](https://www.packer.io/docs/provisioners). For instance, it's possible in this step to launch an Ansible playbook or to configure the Chef client.
@@ -201,9 +189,9 @@ autoinstall:
   ...
   user-data:
     write_files:
-      - path: /etc/crontab
-        content: 15 * * * * root ship_logs
-        append: true
+        - path: /etc/crontab
+          content: 15 * * * * root ship_logs
+          append: true
     ...
 ```
 
@@ -271,14 +259,14 @@ autoinstall:
   ...
   user-data:
     users:
-      - name: madalynn
-        passwd: $6$xyz$1D0kz5pThgRWqxWw6JaZy.6FdkUCSRndc/PMtDr7hMK5mSw7ysChRdlbhkX83PBbNBpqXqef3sBkqGw3Rahs..
-        groups: [adm, cdrom, dip, plugdev, lxd, sudo]
-        lock-passwd: false
-        sudo: ALL=(ALL) NOPASSWD:ALL
-        shell: /bin/bash
-        ssh_authorized_keys:
-          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJEXrziuUOCpWPvwOsGuF4K+aq1ufToGMi4ra/1omOZb
+        - name: madalynn
+          passwd: $6$xyz$1D0kz5pThgRWqxWw6JaZy.6FdkUCSRndc/PMtDr7hMK5mSw7ysChRdlbhkX83PBbNBpqXqef3sBkqGw3Rahs..
+          groups: [adm, cdrom, dip, plugdev, lxd, sudo]
+          lock-passwd: false
+          sudo: ALL=(ALL) NOPASSWD:ALL
+          shell: /bin/bash
+          ssh_authorized_keys:
+            - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJEXrziuUOCpWPvwOsGuF4K+aq1ufToGMi4ra/1omOZb
 ```
 
 This module gives more parameters to configure: groups, shell binary, SSH authorized keys... The `sudo` parameter allows the usage of the `sudo` command without entering any password. This will be useful later to use, for instance, Ansible to complete the installation from the template.
